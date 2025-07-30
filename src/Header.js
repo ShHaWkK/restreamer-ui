@@ -16,8 +16,8 @@ import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import MenuOpenIcon from '@mui/icons-material/MenuOpen';
 import Modal from '@mui/material/Modal';
-import RocketLaunchIcon from '@mui/icons-material/RocketLaunch';
-import Settings from '@mui/icons-material/Settings';
+import InfoIcon from '@mui/icons-material/Info';
+import Tune from '@mui/icons-material/Tune';
 import Stack from '@mui/material/Stack';
 import TranslateIcon from '@mui/icons-material/Translate';
 import Typography from '@mui/material/Typography';
@@ -26,7 +26,7 @@ import WebIcon from '@mui/icons-material/Web';
 
 import * as Storage from './utils/storage';
 import * as Version from './version';
-import welcomeImage from './assets/images/welcome.png';
+import welcomeImage from './assets/images/BSRQ NEW 2025 BLEU 1 (1).png';
 import LanguageSelect from './misc/LanguageSelect';
 import Logo from './misc/Logo/rsLogo';
 import ModalContent from './misc/ModalContent';
@@ -270,7 +270,7 @@ function HeaderMenu(props) {
 					{props.showSettings === true && (
 						<MenuItem onClick={props.onSettings}>
 							<ListItemIcon>
-								<Settings fontSize="small" className={props.hasUpdates ? classes.colorHighlight : ''} />
+								<Tune fontSize="small" className={props.hasUpdates ? classes.colorHighlight : ''} />
 							</ListItemIcon>
 							<Trans>System</Trans>
 						</MenuItem>
@@ -278,7 +278,7 @@ function HeaderMenu(props) {
 					<Divider />
 					<MenuItem onClick={() => setAbout(true)}>
 						<ListItemIcon>
-							<RocketLaunchIcon fontSize="small" />
+							<InfoIcon fontSize="small" />
 						</ListItemIcon>
 						<Trans>About</Trans>
 					</MenuItem>
@@ -318,11 +318,11 @@ function HeaderMenu(props) {
 				</Fab>
 				<StyledMenu anchorEl={$anchorEl} open={$anchorEl !== null} onClose={handleMenuClose} onClick={handleMenuClose}>
 					<MenuItem onClick={() => setAbout(true)}>
-						<ListItemIcon>
-							<RocketLaunchIcon fontSize="small" />
-						</ListItemIcon>
-						<Trans>About</Trans>
-					</MenuItem>
+					<ListItemIcon>
+						<InfoIcon fontSize="small" />
+					</ListItemIcon>
+					<Trans>About</Trans>
+				</MenuItem>
 					<MenuItem component="a" href="https://docs.datarhei.com/restreamer" target="blank">
 						<ListItemIcon>
 							<HelpOutlineIcon fontSize="small" />

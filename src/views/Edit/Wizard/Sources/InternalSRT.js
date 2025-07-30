@@ -7,7 +7,7 @@ import Button from '@mui/material/Button';
 import Grid from '@mui/material/Grid';
 import Icon from '@mui/icons-material/KeyboardTab';
 import MenuItem from '@mui/material/MenuItem';
-import RefreshIcon from '@mui/icons-material/Refresh';
+import SyncIcon from '@mui/icons-material/Sync';
 import Typography from '@mui/material/Typography';
 
 import * as S from '../../Sources/Network';
@@ -111,7 +111,7 @@ function Source(props) {
 					<Select type="select" label={<Trans>Input stream</Trans>} value={settings.push.name} onChange={update('name')}>
 						{options}
 					</Select>
-					<Button size="small" startIcon={<RefreshIcon />} onClick={handleRefresh} sx={{ float: 'right' }}>
+					<Button size="small" startIcon={<SyncIcon />} onClick={handleRefresh} sx={{ float: 'right' }}>
 						<Trans>Refresh</Trans>
 					</Button>
 				</Grid>

@@ -6,7 +6,7 @@ import makeStyles from '@mui/styles/makeStyles';
 import CloudUploadIcon from '@mui/icons-material/CloudUpload';
 import Divider from '@mui/material/Divider';
 import Grid from '@mui/material/Grid';
-import PersonIcon from '@mui/icons-material/Person';
+import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import Typography from '@mui/material/Typography';
 
 import useInterval from '../../hooks/useInterval';
@@ -168,7 +168,7 @@ export default function Publication(props) {
 							<Number value={$session.viewer} />
 						</Typography>
 						<Grid container direction="row" justifyContent="center" alignItems="center" className={classes.vierwerDescription}>
-							<PersonIcon fontSize="small" />
+							<AccountCircleIcon fontSize="small" />
 							<Typography className={classes.vierwerTypo}>
 								<Trans>Viewer</Trans>
 							</Typography>

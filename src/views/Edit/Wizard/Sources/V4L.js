@@ -7,7 +7,7 @@ import { Trans, t } from '@lingui/macro';
 import Button from '@mui/material/Button';
 import Grid from '@mui/material/Grid';
 import MenuItem from '@mui/material/MenuItem';
-import RefreshIcon from '@mui/icons-material/Refresh';
+import SyncIcon from '@mui/icons-material/Sync';
 import Typography from '@mui/material/Typography';
 
 import * as S from '../../Sources/V4L';
@@ -116,7 +116,7 @@ function Source(props) {
 			</Grid>
 			<Grid item xs={12}>
 				{videoDevices}
-				<Button size="small" startIcon={<RefreshIcon />} onClick={handleRefresh} sx={{ float: 'right' }}>
+				<Button size="small" startIcon={<SyncIcon />} onClick={handleRefresh} sx={{ float: 'right' }}>
 					<Trans>Refresh</Trans>
 				</Button>
 			</Grid>

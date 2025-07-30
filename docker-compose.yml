@@ -3,9 +3,9 @@ services:
     image: datarhei/restreamer:latest
     container_name: restreamer
     ports:
-      - "8080:8080"    # HTTP - UI accessible via http://localhost:8080
-      - "8443:443"     # HTTPS 
-      - "8084:8080"    # Backend API (même que HTTP pour cette config)
+      - "80:80"        # HTTP - UI accessible via http://localhost/ui
+      - "443:443"      # HTTPS 
+      - "8084:8080"    # Backend API
     volumes:
       - restreamer_data:/core/data
       - restreamer_config:/core/config

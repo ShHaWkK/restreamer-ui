@@ -6,7 +6,7 @@ import DeviceUnknownIcon from '@mui/icons-material/DeviceUnknown';
 import EditIcon from '@mui/icons-material/Edit';
 import Grid from '@mui/material/Grid';
 import IconButton from '@mui/material/IconButton';
-import OndemandVideoIcon from '@mui/icons-material/OndemandVideo';
+import PlayCircleIcon from '@mui/icons-material/Videocam';
 import Stack from '@mui/material/Stack';
 import Switch from '@mui/material/Switch';
 import Typography from '@mui/material/Typography';
@@ -98,7 +98,7 @@ export default function Egress(props) {
 
 	if (props.service === 'player') {
 		name = <Trans>Player</Trans>;
-		icon = <OndemandVideoIcon className="player-icon" />;
+		icon = <PlayCircleIcon className="player-icon" />;
 	} else {
 		let s = Services.Get(props.service);
 		if (s !== null) {

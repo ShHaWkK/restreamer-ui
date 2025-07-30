@@ -6,7 +6,7 @@ import makeStyles from '@mui/styles/makeStyles';
 import Button from '@mui/material/Button';
 import Grid from '@mui/material/Grid';
 import Icon from '@mui/icons-material/Usb';
-import RefreshIcon from '@mui/icons-material/Refresh';
+import SyncIcon from '@mui/icons-material/Sync';
 import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
 
@@ -118,7 +118,7 @@ function Source(props) {
 					variant="outlined"
 					allowCustom
 				/>
-				<Button size="small" startIcon={<RefreshIcon />} onClick={handleRefresh} sx={{ float: 'right' }}>
+				<Button size="small" startIcon={<SyncIcon />} onClick={handleRefresh} sx={{ float: 'right' }}>
 					<Trans>Refresh</Trans>
 				</Button>
 			</Grid>

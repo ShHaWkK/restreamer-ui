@@ -6,7 +6,7 @@ import makeStyles from '@mui/styles/makeStyles';
 import Button from '@mui/material/Button';
 import Grid from '@mui/material/Grid';
 import Icon from '@mui/icons-material/Apple';
-import RefreshIcon from '@mui/icons-material/Refresh';
+import SyncIcon from '@mui/icons-material/Sync';
 import Typography from '@mui/material/Typography';
 
 import Checkbox from '../../../misc/Checkbox';
@@ -177,7 +177,7 @@ function Source(props) {
 			</Grid>
 			<Grid item xs={12}>
 				{audioDevices}
-				<Button size="small" startIcon={<RefreshIcon />} onClick={handleRefresh} sx={{ float: 'right' }}>
+				<Button size="small" startIcon={<SyncIcon />} onClick={handleRefresh} sx={{ float: 'right' }}>
 					<Trans>Refresh</Trans>
 				</Button>
 			</Grid>
