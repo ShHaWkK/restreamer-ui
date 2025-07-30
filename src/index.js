@@ -9,14 +9,18 @@ import CssBaseline from '@mui/material/CssBaseline';
 import theme from './theme';
 import RestreamerUI from './RestreamerUI';
 
+const defaultAddress = process.env.REACT_APP_DEFAULT_CORE_ADDRESS;
 let address = window.location.protocol + '//' + window.location.host;
-if (window.location.pathname.endsWith('/ui/')) {
-	address += window.location.pathname.replace(/ui\/$/, '');
+
+if (typeof defaultAddress === 'string' && defaultAddress.length > 0) {
+        address = defaultAddress;
+} else if (window.location.pathname.endsWith('/ui/')) {
+        address += window.location.pathname.replace(/ui\/$/, '');
 }
 
 const urlParams = new URLSearchParams(window.location.search.substring(1));
 if (urlParams.has('address') === true) {
-	address = urlParams.get('address');
+        address = urlParams.get('address');
 }
 
 createRoot(document.getElementById('root')).render(

@@ -1,0 +1,26 @@
+version: '3.8'
+services:
+  core:
+    image: datarhei/core:latest
+    ports:
+      - "8084:8080"
+    environment:
+      - CORE_API_AUTH_USERNAME=admin
+      - CORE_API_AUTH_PASSWORD=datarhei
+      - CORE_API_AUTH_ENABLE=true
+      - CORE_STATIC_PATH=/core/static
+    volumes:
+      - core-data:/core
+
+  ui:
+    build:
+      context: .
+      args:
+        REACT_APP_DEFAULT_CORE_ADDRESS: http://localhost:8084
+    ports:
+      - "3000:3000"
+    depends_on:
+      - core
+
+volumes:
+  core-data:
