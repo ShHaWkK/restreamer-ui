@@ -28,7 +28,6 @@ import * as Storage from './utils/storage';
 import * as Version from './version';
 import welcomeImage from './assets/images/BSRQ NEW 2025 BLEU 1 (1).png';
 import LanguageSelect from './misc/LanguageSelect';
-import Logo from './misc/Logo/rsLogo';
 import ModalContent from './misc/ModalContent';
 import PaperThumb from './misc/PaperThumb';
 
@@ -117,6 +116,14 @@ const useStyles = makeStyles((theme) => ({
 	},
 	colorHighlight: {
 		color: `${theme.palette.secondary.main}!important`,
+	},
+	bsrqText: {
+		color: '#ffffff', // Blanc
+		fontWeight: 'bold',
+		fontSize: '2.5rem',
+		fontFamily: '"Dosis", "Roboto", "Helvetica", "Arial", sans-serif',
+		marginLeft: 15,
+		marginBottom: '0.2em',
 	},
 }));
 
@@ -368,8 +375,7 @@ export default function Header(props) {
 			<Grid item xs={12}>
 				<Stack direction="row" justifyContent="space-between" alignItems="center" spacing={0}>
 					<Stack direction="row" alignItems="center" spacing={0} className="headerLeft">
-						<Logo className="fabIcon" />
-						<Typography className="headerTitle">Restreamer</Typography>
+						<Typography className={classes.bsrqText}>BSRQ</Typography>
 					</Stack>
 					<Stack className="headerRight" direction="row" alignItems="center" spacing={0}>
 						<HeaderMenu {...props}></HeaderMenu>

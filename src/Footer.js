@@ -16,7 +16,6 @@ import WarningIcon from '@mui/icons-material/Warning';
 
 import useInterval from './hooks/useInterval';
 import Duration from './misc/Duration';
-import Logo from './misc/Logo';
 import Number from './misc/Number';
 
 const useStyles = makeStyles((theme) => ({
@@ -64,6 +63,12 @@ const useStyles = makeStyles((theme) => ({
 		color: `${theme.palette.service.main}`,
 		textTransform: 'uppercase',
 		fontWeight: 'bold',
+	},
+	bsrqText: {
+		color: '#ffffff', // Blanc
+		fontWeight: 'bold',
+		fontSize: '1.2rem',
+		fontFamily: 'Arial, sans-serif',
 	},
 }));
 
@@ -377,7 +382,7 @@ export default function Footer(props) {
 				<Grid item xs={12}>
 					<Stack direction="row" justifyContent="space-between" alignItems="center" spacing={0}>
 						<Stack className="footerLeft" direction="row" alignItems="center" spacing={0}>
-							<Logo className={classes.logo} />
+							<Typography className={classes.bsrqText}>BSRQ</Typography>
 							<Typography className="footerVersion">
 								{props.app} v{version.number} ({version.arch}) {props.name ? '- ' + props.name : ''}
 							</Typography>
@@ -393,7 +398,7 @@ export default function Footer(props) {
 				<Grid item xs={12}>
 					<Stack direction="row" justifyContent="space-between" alignItems="center" spacing={0}>
 						<Stack className="footerLeft" direction="row" alignItems="center" spacing={0}>
-							<Logo className={classes.logo} />
+							<Typography className={classes.bsrqText}>BSRQ</Typography>
 						</Stack>
 					</Stack>
 				</Grid>
