@@ -26,5 +26,17 @@ $ npm run i18n-extract:clean
 $ npm run i18n-compile
 ```
 
+## Docker Compose
+
+Build the UI and start both the UI and Core containers:
+
+```
+yarn install
+yarn build
+docker compose up --build
+```
+
+The interface will be available at http://localhost:3000 while the Core API is exposed on http://localhost:8084.
+
 ## License
 See the [LICENSE](./LICENSE) file for licensing information.

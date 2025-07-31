@@ -1,23 +1,33 @@
+version: "3.8"
 services:
-  restreamer:
-    build:
-      context: .
-      dockerfile: Dockerfile.custom
-    container_name: restreamer
+  core:
+    image: datarhei/restreamer:latest
+    container_name: restreamer-core
     ports:
-      - "80:80"        # HTTP - UI accessible via http://localhost/ui
-      - "443:443"      # HTTPS 
-      - "8084:8080"    # Backend API
+      - "80:80"
+      - "443:443"
+      - "8084:8080"
     volumes:
       - restreamer_data:/core/data
       - restreamer_config:/core/config
-      - ./build:/core/static/ui  # Mount notre build personnalisé
     environment:
       - CORE_API_AUTH_USERNAME=admin
       - CORE_API_AUTH_PASSWORD=datarhei
       - CORE_API_AUTH_ENABLE=true
-      - CORE_STATIC_PATH=/core/static
+    restart: unless-stopped
     privileged: true
+
+  ui:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: restreamer-ui
+    depends_on:
+      - core
+    ports:
+      - "3000:3000"
+    environment:
+      - CORE_ADDRESS=http://core:8080
     restart: unless-stopped
 
 volumes:
