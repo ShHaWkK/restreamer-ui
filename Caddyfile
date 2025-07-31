@@ -1,6 +1,14 @@
-:3000
+:80
 
-encode zstd gzip
-file_server {
-	root ./build
-}
+# redirige vers ?address=... si le query param address= est absent
+@noAddress not expression {http.request.uri.query} contains "address="
+redir @noAddress {http.request.uri.path}?address=http://restreamer-core:8080 302
+
+# servir le SPA
+root * /ui/build
+file_server
+try_files {path} /index.html
+
+# proxy des appels API vers le core
+@api path /api/*
+reverse_proxy @api restreamer-core:8080
