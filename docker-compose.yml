@@ -1,11 +1,9 @@
-version: "3.8"
-
 services:
   restreamer-core:
     image: datarhei/core:latest
     container_name: restreamer-core
     ports:
-      - "8084:8080"   # Core exposé sur localhost:8084
+      - "8084:8080"
     environment:
       - CORE_API_AUTH_ENABLE=true
       - CORE_API_AUTH_USERNAME=admin
@@ -21,14 +19,15 @@ services:
       context: .
       dockerfile: Dockerfile
       args:
-        REACT_APP_DEFAULT_CORE_ADDRESS: http://restreamer-core:8080
+        # IMPORTANT: adresse vue par le navigateur (pas le DNS Docker)
+        REACT_APP_DEFAULT_CORE_ADDRESS: http://127.0.0.1:8084
     container_name: restreamer-ui
     depends_on:
       - restreamer-core
     ports:
-      - "3000:80"   # Caddy écoute sur 80 → accessible sur 3000
+      - "3000:80"
     environment:
-      - REACT_APP_DEFAULT_CORE_ADDRESS=http://restreamer-core:8080
+      REACT_APP_DEFAULT_CORE_ADDRESS: http://127.0.0.1:8084
     restart: unless-stopped
 
 volumes:

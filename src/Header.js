@@ -175,7 +175,12 @@ function AboutModal(props) {
 			<ModalContent title="About datarhei Restreamer" onClose={props.onClose} className={classes.modalPaper}>
 				<Grid container spacing={1}>
 					<Grid item xs={12} className={classes.aboutImage}>
-						<PaperThumb image={welcomeImage} title="Welcome to Restreamer v2" height="200px" />
+						<PaperThumb
+							image={welcomeImage}
+							title="Welcome to Restreamer v2"
+							height={400}                  // ← ajuste ici si tu veux encore plus grand
+							sx={{ maxWidth: 520, mx: 'auto' }}   // centré, largeur max optionnelle
+							/>
 					</Grid>
 					<Grid item xs={12}>
 						<Typography variant="body1">
