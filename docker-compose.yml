@@ -1,26 +1,35 @@
-version: '3.8'
 services:
-  core:
+  restreamer-core:
     image: datarhei/core:latest
+    container_name: restreamer-core
     ports:
       - "8084:8080"
     environment:
+      - CORE_API_AUTH_ENABLE=true
       - CORE_API_AUTH_USERNAME=admin
       - CORE_API_AUTH_PASSWORD=datarhei
-      - CORE_API_AUTH_ENABLE=true
-      - CORE_STATIC_PATH=/core/static
+      - CORE_CORS_ALLOW_ORIGIN=http://localhost:3000
     volumes:
-      - core-data:/core
+      - restreamer_core_config:/core/config
+      - restreamer_core_data:/core/data
+    restart: unless-stopped
 
-  ui:
+  restreamer-ui:
     build:
       context: .
+      dockerfile: Dockerfile
       args:
-        REACT_APP_DEFAULT_CORE_ADDRESS: http://localhost:8084
-    ports:
-      - "3000:3000"
+        # IMPORTANT: adresse vue par le navigateur (pas le DNS Docker)
+        REACT_APP_DEFAULT_CORE_ADDRESS: http://127.0.0.1:8084
+    container_name: restreamer-ui
     depends_on:
-      - core
+      - restreamer-core
+    ports:
+      - "3000:80"
+    environment:
+      REACT_APP_DEFAULT_CORE_ADDRESS: http://127.0.0.1:8084
+    restart: unless-stopped
 
 volumes:
-  core-data:
+  restreamer_core_config:
+  restreamer_core_data:

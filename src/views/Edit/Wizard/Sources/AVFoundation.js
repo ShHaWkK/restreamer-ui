@@ -6,7 +6,7 @@ import Button from '@mui/material/Button';
 import Grid from '@mui/material/Grid';
 import Icon from '@mui/icons-material/Apple';
 import MenuItem from '@mui/material/MenuItem';
-import RefreshIcon from '@mui/icons-material/Refresh';
+import SyncIcon from '@mui/icons-material/Sync';
 import Typography from '@mui/material/Typography';
 
 import * as S from '../../Sources/AVFoundation';
@@ -131,7 +131,7 @@ function Source(props) {
 				<Grid container alignItems="center" spacing={1}>
 					<Grid item xs={12}>
 						{audioDevices}
-						<Button size="small" startIcon={<RefreshIcon />} onClick={handleRefresh} sx={{ float: 'right' }}>
+						<Button size="small" startIcon={<SyncIcon />} onClick={handleRefresh} sx={{ float: 'right' }}>
 							<Trans>Refresh</Trans>
 						</Button>
 					</Grid>

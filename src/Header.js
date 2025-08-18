@@ -16,8 +16,8 @@ import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import MenuOpenIcon from '@mui/icons-material/MenuOpen';
 import Modal from '@mui/material/Modal';
-import RocketLaunchIcon from '@mui/icons-material/RocketLaunch';
-import Settings from '@mui/icons-material/Settings';
+import InfoIcon from '@mui/icons-material/Info';
+import Tune from '@mui/icons-material/Tune';
 import Stack from '@mui/material/Stack';
 import TranslateIcon from '@mui/icons-material/Translate';
 import Typography from '@mui/material/Typography';
@@ -26,9 +26,8 @@ import WebIcon from '@mui/icons-material/Web';
 
 import * as Storage from './utils/storage';
 import * as Version from './version';
-import welcomeImage from './assets/images/welcome.png';
+import welcomeImage from './assets/images/BSRQ NEW 2025 BLEU 1 (1).png';
 import LanguageSelect from './misc/LanguageSelect';
-import Logo from './misc/Logo/rsLogo';
 import ModalContent from './misc/ModalContent';
 import PaperThumb from './misc/PaperThumb';
 
@@ -118,6 +117,14 @@ const useStyles = makeStyles((theme) => ({
 	colorHighlight: {
 		color: `${theme.palette.secondary.main}!important`,
 	},
+	bsrqText: {
+		color: '#ffffff', // Blanc
+		fontWeight: 'bold',
+		fontSize: '2.5rem',
+		fontFamily: '"Dosis", "Roboto", "Helvetica", "Arial", sans-serif',
+		marginLeft: 15,
+		marginBottom: '0.2em',
+	},
 }));
 
 const StyledMenu = styled((props) => (
@@ -168,7 +175,12 @@ function AboutModal(props) {
 			<ModalContent title="About datarhei Restreamer" onClose={props.onClose} className={classes.modalPaper}>
 				<Grid container spacing={1}>
 					<Grid item xs={12} className={classes.aboutImage}>
-						<PaperThumb image={welcomeImage} title="Welcome to Restreamer v2" height="200px" />
+						<PaperThumb
+							image={welcomeImage}
+							title="Welcome to Restreamer v2"
+							height={400}                  // ← ajuste ici si tu veux encore plus grand
+							sx={{ maxWidth: 520, mx: 'auto' }}   // centré, largeur max optionnelle
+							/>
 					</Grid>
 					<Grid item xs={12}>
 						<Typography variant="body1">
@@ -270,7 +282,7 @@ function HeaderMenu(props) {
 					{props.showSettings === true && (
 						<MenuItem onClick={props.onSettings}>
 							<ListItemIcon>
-								<Settings fontSize="small" className={props.hasUpdates ? classes.colorHighlight : ''} />
+								<Tune fontSize="small" className={props.hasUpdates ? classes.colorHighlight : ''} />
 							</ListItemIcon>
 							<Trans>System</Trans>
 						</MenuItem>
@@ -278,7 +290,7 @@ function HeaderMenu(props) {
 					<Divider />
 					<MenuItem onClick={() => setAbout(true)}>
 						<ListItemIcon>
-							<RocketLaunchIcon fontSize="small" />
+							<InfoIcon fontSize="small" />
 						</ListItemIcon>
 						<Trans>About</Trans>
 					</MenuItem>
@@ -318,11 +330,11 @@ function HeaderMenu(props) {
 				</Fab>
 				<StyledMenu anchorEl={$anchorEl} open={$anchorEl !== null} onClose={handleMenuClose} onClick={handleMenuClose}>
 					<MenuItem onClick={() => setAbout(true)}>
-						<ListItemIcon>
-							<RocketLaunchIcon fontSize="small" />
-						</ListItemIcon>
-						<Trans>About</Trans>
-					</MenuItem>
+					<ListItemIcon>
+						<InfoIcon fontSize="small" />
+					</ListItemIcon>
+					<Trans>About</Trans>
+				</MenuItem>
 					<MenuItem component="a" href="https://docs.datarhei.com/restreamer" target="blank">
 						<ListItemIcon>
 							<HelpOutlineIcon fontSize="small" />
@@ -368,8 +380,7 @@ export default function Header(props) {
 			<Grid item xs={12}>
 				<Stack direction="row" justifyContent="space-between" alignItems="center" spacing={0}>
 					<Stack direction="row" alignItems="center" spacing={0} className="headerLeft">
-						<Logo className="fabIcon" />
-						<Typography className="headerTitle">Restreamer</Typography>
+						<Typography className={classes.bsrqText}>BSRQ</Typography>
 					</Stack>
 					<Stack className="headerRight" direction="row" alignItems="center" spacing={0}>
 						<HeaderMenu {...props}></HeaderMenu>

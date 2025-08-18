@@ -5,7 +5,7 @@ import { t } from '@lingui/macro';
 import DownloadIcon from '@mui/icons-material/Download';
 import FileCopyIcon from '@mui/icons-material/FileCopy';
 import IconButton from '@mui/material/IconButton';
-import OpenInNewIcon from '@mui/icons-material/OpenInNew';
+import LaunchIcon from '@mui/icons-material/Launch';
 import Stack from '@mui/material/Stack';
 
 import NotifyContext from '../contexts/Notify';
@@ -163,7 +163,7 @@ export default function Component(props) {
 					)}
 					{allowModal && (
 						<IconButton size="small" onClick={handleModal} style={actionButton}>
-							<OpenInNewIcon fontSize="small" />
+							<LaunchIcon fontSize="small" />
 						</IconButton>
 					)}
 				</Stack>

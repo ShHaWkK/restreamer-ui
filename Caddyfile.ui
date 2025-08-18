@@ -1,0 +1,21 @@
+# Configuration pour servir l'UI via /ui
+:80 {
+    # Servir l'UI React sur le chemin /ui
+    handle_path /ui/* {
+        root * /ui/build
+        file_server
+        try_files {path} /index.html
+    }
+    
+    # Proxy pour l'API du core
+    handle /api/* {
+        reverse_proxy localhost:8080
+    }
+    
+    # Redirection par défaut vers l'UI
+    handle / {
+        redir /ui/
+    }
+    
+    encode zstd gzip
+}

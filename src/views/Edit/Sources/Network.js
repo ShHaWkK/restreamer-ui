@@ -13,7 +13,7 @@ import Button from '@mui/material/Button';
 import Grid from '@mui/material/Grid';
 import Icon from '@mui/icons-material/AccountTree';
 import MenuItem from '@mui/material/MenuItem';
-import RefreshIcon from '@mui/icons-material/Refresh';
+import SyncIcon from '@mui/icons-material/Sync';
 import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
 import WarningIcon from '@mui/icons-material/Warning';
@@ -961,7 +961,7 @@ function PushRTMP(props) {
 					<Select type="select" label={<Trans>Input stream</Trans>} value={props.settings.push.name} onChange={props.onChange('push', 'name')}>
 						{options}
 					</Select>
-					<Button size="small" startIcon={<RefreshIcon />} onClick={props.onRefresh} sx={{ float: 'right' }}>
+					<Button size="small" startIcon={<SyncIcon />} onClick={props.onRefresh} sx={{ float: 'right' }}>
 						<Trans>Refresh</Trans>
 					</Button>
 				</Grid>
@@ -1055,7 +1055,7 @@ function PushSRT(props) {
 					<Select type="select" label={<Trans>Input stream</Trans>} value={props.settings.push.name} onChange={props.onChange('push', 'name')}>
 						{options}
 					</Select>
-					<Button size="small" startIcon={<RefreshIcon />} onClick={props.onRefresh} sx={{ float: 'right' }}>
+					<Button size="small" startIcon={<SyncIcon />} onClick={props.onRefresh} sx={{ float: 'right' }}>
 						<Trans>Refresh</Trans>
 					</Button>
 				</Grid>

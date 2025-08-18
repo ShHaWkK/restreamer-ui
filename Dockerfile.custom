@@ -1,0 +1,8 @@
+# Dockerfile personnalisé pour utiliser notre interface modifiée
+FROM datarhei/restreamer:latest
+
+# Exposer les ports
+EXPOSE 80 443 8080
+
+# Utiliser le script de démarrage original
+CMD ["/core/bin/run.sh"]

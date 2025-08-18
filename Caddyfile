@@ -1,6 +1,24 @@
-:3000
+:80
 
-encode zstd gzip
-file_server {
-	root ./build
+# Redirige UNIQUEMENT la page d'accueil si ?address= est absent
+@missingAddressRoot {
+  path /
+  not query address=*
 }
+redir @missingAddressRoot /?address=http://127.0.0.1:8084 302
+
+# (optionnel) si /index.html sans param
+@missingAddressIndex {
+  path /index.html
+  not query address=*
+}
+redir @missingAddressIndex /index.html?address=http://127.0.0.1:8084 302
+
+# Sert le SPA
+root * /ui/build
+file_server
+try_files {path} /index.html
+
+# Proxy serveur (inutile pour l’instant, mais prêt si un jour tu utilises /api côté UI)
+@api path /api/*
+reverse_proxy @api restreamer-core:8080

@@ -1,23 +1,30 @@
+// PaperThumb.jsx
 import React from 'react';
-
-import makeStyles from '@mui/styles/makeStyles';
 import CardMedia from '@mui/material/CardMedia';
 
-const useStyles = makeStyles((theme) => ({
-	media: {
-		paddingTop: '39.25%',
-		borderRadius: 4,
-	},
-}));
+export default function Component({
+  image = '',
+  title = '',
+  height = 400,      // ← plus grand par défaut
+  fit = 'contain',
+  sx = {},
+}) {
+  const h = typeof height === 'number' ? `${height}px` : height;
 
-export default function Component(props) {
-	const classes = useStyles();
-
-	return <CardMedia className={classes.media} style={{ height: props.height }} image={props.image} title={props.title} />;
+  return (
+    <CardMedia
+      component="img"
+      image={image}
+      alt={title}
+      sx={{
+        display: 'block',
+        width: '100%',
+        height: h,           // ← contrôle la taille
+        objectFit: fit,      // 'contain' = jamais rognée
+        objectPosition: 'center',
+        borderRadius: 1,
+        ...sx,
+      }}
+    />
+  );
 }
-
-Component.defaultProps = {
-	image: '',
-	title: '',
-	height: '0px',
-};
