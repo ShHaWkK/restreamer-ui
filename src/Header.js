@@ -26,10 +26,11 @@ import WebIcon from '@mui/icons-material/Web';
 
 import * as Storage from './utils/storage';
 import * as Version from './version';
-import welcomeImage from './assets/images/BSRQ NEW 2025 BLEU 1 (1).png';
+import welcomeImage from './assets/images/logo.png';
 import LanguageSelect from './misc/LanguageSelect';
 import ModalContent from './misc/ModalContent';
 import PaperThumb from './misc/PaperThumb';
+import companyLogo from './assets/images/logo.png';
 
 const useStyles = makeStyles((theme) => ({
 	header: {
@@ -124,6 +125,15 @@ const useStyles = makeStyles((theme) => ({
 		fontFamily: '"Dosis", "Roboto", "Helvetica", "Arial", sans-serif',
 		marginLeft: 15,
 		marginBottom: '0.2em',
+	},
+	logoImg: {
+		height: 56,
+		width: 'auto',
+		objectFit: 'contain',
+		filter: 'drop-shadow(0 1px 1px rgba(0,0,0,0.25))',
+		'@media (max-width: 599px)': {
+			height: 40,
+		},
 	},
 }));
 
@@ -379,8 +389,9 @@ export default function Header(props) {
 		<Grid container className={classes.header} spacing={0} direction="row" alignItems="center">
 			<Grid item xs={12}>
 				<Stack direction="row" justifyContent="space-between" alignItems="center" spacing={0}>
-					<Stack direction="row" alignItems="center" spacing={0} className="headerLeft">
-						<Typography className={classes.bsrqText}>BSRQ</Typography>
+					<Stack direction="row" alignItems="center" spacing={1} className="headerLeft">
+						<img src={companyLogo} alt="Logo" className={classes.logoImg} />
+						{/* BSRQ text removed as requested */}
 					</Stack>
 					<Stack className="headerRight" direction="row" alignItems="center" spacing={0}>
 						<HeaderMenu {...props}></HeaderMenu>

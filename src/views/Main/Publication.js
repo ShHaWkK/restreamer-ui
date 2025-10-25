@@ -16,6 +16,7 @@ import Number from '../../misc/Number';
 import Paper from '../../misc/Paper';
 import PaperHeader from '../../misc/PaperHeader';
 import Services from '../Publication/Services';
+import Button from '@mui/material/Button';
 
 const useStyles = makeStyles((theme) => ({
 	viewerCount: {
@@ -113,18 +114,20 @@ export default function Publication(props) {
 		navigate(target);
 	};
 
-	const handleOrderChange = (id) => async (order) => {
+
+
+	const handleOrderChange = (egress) => async (order) => {
 		let res = false;
 
 		if (order === 'start') {
-			res = await props.restreamer.StartEgress(props.channelid, id);
+			res = await props.restreamer.StartEgress(props.channelid, egress.id);
 		} else if (order === 'restart') {
-			res = await props.restreamer.StopEgress(props.channelid, id);
+			res = await props.restreamer.StopEgress(props.channelid, egress.id);
 			if (res === true) {
-				res = await props.restreamer.StartEgress(props.channelid, id);
+				res = await props.restreamer.StartEgress(props.channelid, egress.id);
 			}
 		} else if (order === 'stop') {
-			res = await props.restreamer.StopEgress(props.channelid, id);
+			res = await props.restreamer.StopEgress(props.channelid, egress.id);
 		}
 
 		return res;
@@ -144,14 +147,14 @@ export default function Publication(props) {
 				</Grid>
 				<Grid item xs={12}>
 					<Egress
-						service={e.service}
-						name={e.name}
-						state={e.progress.state}
-						order={e.progress.order}
-						reconnect={e.progress.reconnect !== -1}
-						onEdit={handleServiceEdit(e.service, e.index)}
-						onOrder={handleOrderChange(e.id)}
-					/>
+							service={e.service}
+							name={e.name}
+							state={e.progress.state}
+							order={e.progress.order}
+							reconnect={e.progress.reconnect !== -1}
+							onEdit={handleServiceEdit(e.service, e.index)}
+							onOrder={handleOrderChange(e)}
+						/>
 				</Grid>
 			</React.Fragment>
 		);
