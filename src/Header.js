@@ -30,7 +30,7 @@ import welcomeImage from './assets/images/BSRQ NEW 2025 BLEU 1 (1).png';
 import LanguageSelect from './misc/LanguageSelect';
 import ModalContent from './misc/ModalContent';
 import PaperThumb from './misc/PaperThumb';
-import companyLogo from './assets/images/logo.png';
+import companyLogo from './assets/images/logo1.png';
 
 const useStyles = makeStyles((theme) => ({
 	header: {

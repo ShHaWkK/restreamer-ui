@@ -17,7 +17,7 @@ import WarningIcon from '@mui/icons-material/Warning';
 import useInterval from './hooks/useInterval';
 import Duration from './misc/Duration';
 import Number from './misc/Number';
-import companyLogo from './assets/images/logo.png';
+import companyLogo from './assets/images/logo1.png';
 
 const useStyles = makeStyles((theme) => ({
 	footer: {
