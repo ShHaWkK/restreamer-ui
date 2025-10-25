@@ -24,6 +24,8 @@ import Progress from './Progress';
 import Publication from './Publication';
 import ProcessModal from '../../misc/modals/Process';
 import Welcome from '../Welcome';
+import Dialog from '../../misc/modals/Dialog';
+import Button from '@mui/material/Button';
 
 const useStyles = makeStyles((theme) => ({
 	gridContainerL1: {
@@ -85,6 +87,7 @@ export default function Main(props) {
 	});
 	const [$config, setConfig] = React.useState(null);
 	const [$invalid, setInvalid] = React.useState(false);
+	const [$disconnectDialog, setDisconnectDialog] = React.useState(false);
 
 	useInterval(async () => {
 		await update();
@@ -202,6 +205,18 @@ export default function Main(props) {
 
 	const disconnectEgresses = async () => {
 		await props.restreamer.StopAllEgresses(_channelid);
+	};
+
+	// Confirmation dialog handlers
+	const handleDisconnectDialogOpen = () => {
+		setDisconnectDialog(true);
+	};
+	const handleDisconnectDialogAbort = () => {
+		setDisconnectDialog(false);
+	};
+	const handleDisconnectDialogDone = async () => {
+		setDisconnectDialog(false);
+		await disconnect();
 	};
 
 	const handleProcessDetails = async (event) => {
@@ -441,7 +456,7 @@ export default function Main(props) {
 									order={$state.order}
 									state={$state.state}
 									reconnect={$state.progress.reconnect}
-									onDisconnect={disconnect}
+									onDisconnect={handleDisconnectDialogOpen}
 									onConnect={connect}
 									onReconnect={reconnect}
 								/>
@@ -461,6 +476,21 @@ export default function Main(props) {
 					<Publication restreamer={props.restreamer} channelid={_channelid} />
 				</Grid>
 			</Grid>
+			<Dialog
+				open={$disconnectDialog}
+				onClose={handleDisconnectDialogAbort}
+				title={<Trans>Do you want to disconnect "{$metadata?.meta?.name || ''}"?</Trans>}
+				buttonsLeft={
+					<Button variant="outlined" color="default" onClick={handleDisconnectDialogAbort}>
+						<Trans>Abort</Trans>
+					</Button>
+				}
+				buttonsRight={
+					<Button variant="outlined" color="secondary" onClick={handleDisconnectDialogDone}>
+						<Trans>Disconnect</Trans>
+					</Button>
+				}
+			/>
 			<ProcessModal
 				open={$processDetails.open}
 				onClose={handleProcessDetails}

@@ -233,17 +233,17 @@ export default function Login(props) {
 							<ToggleButtonGroup value={$loginTarget} exclusive onChange={handleLoginTargetChange}>
 								{hasAuthType($auths, 'auth0') && (
 									<ToggleButton value="auth0">
-										<Trans>Auth0</Trans>
+										<Trans id="Auth0">Auth0</Trans>
 									</ToggleButton>
 								)}
 								{hasAuthType($auths, 'local') && (
 									<ToggleButton value="local">
-										<Trans>Basic</Trans>
+										<Trans id="Basic">Basic</Trans>
 									</ToggleButton>
 								)}
 								{props.hasService === true && !hasAuthType($auths, 'auth0') && (
 									<ToggleButton value="service">
-										<Trans>Service</Trans>
+										<Trans id="Service">Service</Trans>
 									</ToggleButton>
 								)}
 							</ToggleButtonGroup>
@@ -269,7 +269,7 @@ export default function Login(props) {
 											variant="outlined"
 											fullWidth
 											id="username"
-											label={<Trans>Username</Trans>}
+											label={<Trans id="Username">Username</Trans>}
 											value={$login.username}
 											onChange={handleChange('username')}
 											autoComplete="username"
@@ -279,7 +279,7 @@ export default function Login(props) {
 										<Password
 											value={$login.password}
 											id="password"
-											label={<Trans>Password</Trans>}
+											label={<Trans id="Password">Password</Trans>}
 											onChange={handleChange('password')}
 											autoComplete="current-password"
 										/>
@@ -294,7 +294,7 @@ export default function Login(props) {
 											name="login_local"
 											onClick={handleLogin}
 										>
-											<Trans>Login</Trans>
+											<Trans id="Login">Login</Trans>
 										</Button>
 									</Grid>
 								</Grid>

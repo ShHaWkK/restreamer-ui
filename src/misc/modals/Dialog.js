@@ -31,12 +31,13 @@ const useStyles = makeStyles((theme) => ({
 	},
 	modalPaper: {
 		padding: '1em 1.5em 1.3em 1.5em',
-		width: '95%',
-		maxWidth: 540,
-		maxHeight: '95%',
-		overflow: 'scroll',
+		width: 'auto',
+		maxWidth: 560,
+		maxHeight: '90vh',
+		overflow: 'visible',
 		backgroundColor: theme.palette.background.modal,
 		color: theme.palette.text.primary,
+		borderRadius: 8,
 	},
 }));
 

@@ -17,6 +17,7 @@ import WarningIcon from '@mui/icons-material/Warning';
 import useInterval from './hooks/useInterval';
 import Duration from './misc/Duration';
 import Number from './misc/Number';
+import companyLogo from './assets/images/logo.png';
 
 const useStyles = makeStyles((theme) => ({
 	footer: {
@@ -64,11 +65,11 @@ const useStyles = makeStyles((theme) => ({
 		textTransform: 'uppercase',
 		fontWeight: 'bold',
 	},
-	bsrqText: {
-		color: '#ffffff', // Blanc
-		fontWeight: 'bold',
-		fontSize: '1.2rem',
-		fontFamily: 'Arial, sans-serif',
+	logoImg: {
+		height: 26,
+		width: 'auto',
+		objectFit: 'contain',
+		filter: 'drop-shadow(0 1px 1px rgba(0,0,0,0.25))',
 	},
 }));
 
@@ -382,7 +383,7 @@ export default function Footer(props) {
 				<Grid item xs={12}>
 					<Stack direction="row" justifyContent="space-between" alignItems="center" spacing={0}>
 						<Stack className="footerLeft" direction="row" alignItems="center" spacing={0}>
-							<Typography className={classes.bsrqText}>BSRQ</Typography>
+							<img src={companyLogo} alt="Logo" className={classes.logoImg} />
 							<Typography className="footerVersion">
 								{props.app} v{version.number} ({version.arch}) {props.name ? '- ' + props.name : ''}
 							</Typography>
@@ -398,7 +399,7 @@ export default function Footer(props) {
 				<Grid item xs={12}>
 					<Stack direction="row" justifyContent="space-between" alignItems="center" spacing={0}>
 						<Stack className="footerLeft" direction="row" alignItems="center" spacing={0}>
-							<Typography className={classes.bsrqText}>BSRQ</Typography>
+							<img src={companyLogo} alt="Logo" className={classes.logoImg} />
 						</Stack>
 					</Stack>
 				</Grid>
