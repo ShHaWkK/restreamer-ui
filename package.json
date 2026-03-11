@@ -63,6 +63,7 @@
 		"i18n-compile": "lingui compile",
 		"format": "prettier --write ./src"
 	},
+	"proxy": "http://127.0.0.1:8084",
 	"eslintConfig": {
 		"extends": "react-app",
 		"overrides": [

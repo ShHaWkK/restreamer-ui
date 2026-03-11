@@ -1,6 +1,7 @@
 import React from 'react';
 
-import { Trans } from '@lingui/macro';
+import { Trans, t } from '@lingui/macro';
+import { useLingui } from '@lingui/react';
 import Grid from '@mui/material/Grid';
 import MenuItem from '@mui/material/MenuItem';
 import Typography from '@mui/material/Typography';
@@ -40,12 +41,11 @@ function createGraph(settings) {
 
 // filter
 function Pan(props) {
+	const { i18n } = useLingui();
 	return (
 		<React.Fragment>
 			<Select label={<Trans>Pan</Trans>} value={props.value} onChange={props.onChange}>
-				<MenuItem value="inherit">
-					<Trans>Inherit</Trans>
-				</MenuItem>
+				<MenuItem value="inherit">{i18n.locale === 'fr' ? 'Par défaut' : i18n._(t`Inherit`)}</MenuItem>
 				<MenuItem value="mute_left">
 					<Trans>Mute left</Trans>
 				</MenuItem>

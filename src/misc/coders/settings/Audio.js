@@ -104,7 +104,7 @@ function Layout(props) {
 	}
 
 	if (props.allowInherit === true) {
-		options.unshift({ value: 'inherit', label: i18n._(t`Inherit`) });
+		options.unshift({ value: 'inherit', label: i18n.locale === 'fr' ? 'Par défaut' : i18n._(t`Inherit`) });
 	}
 
 	if (props.allowCustom === true) {
@@ -155,7 +155,7 @@ function Sampling(props) {
 	}
 
 	if (props.allowInherit === true) {
-		options.unshift({ value: 'inherit', label: i18n._(t`Inherit`) });
+		options.unshift({ value: 'inherit', label: i18n.locale === 'fr' ? 'Par défaut' : i18n._(t`Inherit`) });
 	}
 
 	if (props.allowCustom === true) {

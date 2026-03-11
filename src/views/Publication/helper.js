@@ -316,6 +316,18 @@ export function preselectProfile(profile, type, streams, codecs, skills) {
 		// Select the first stream with matching type.
 		profile.stream = i;
 
+		// Prefer AAC for audio by default if available
+		if (type === 'audio' && codecs.includes('aac')) {
+			const coder = Coders.Audio.GetCoderForCodec('aac', encoders);
+			if (coder !== null) {
+				const defaults = coder.defaults(streams[i], skills);
+				profile.encoder.coder = coder.coder;
+				profile.encoder.settings = defaults.settings;
+				profile.encoder.mapping = defaults.mapping;
+				break;
+			}
+		}
+
 		if (!codecs.includes(streams[i].codec)) {
 			// The codec doesn't match. Select the first available coder for one of the target codecs.
 			for (let codec of codecs) {

@@ -24,6 +24,8 @@ import * as helper from './helper';
 import * as M from '../../utils/metadata';
 import EncodingSelect from '../../misc/EncodingSelect';
 import FilterSelect from '../../misc/FilterSelect';
+import * as Encoders from '../../misc/coders/Encoders';
+import * as Filters from '../../misc/filters';
 import H from '../../utils/help';
 import LimitsControl from '../../misc/controls/Limits';
 import NotifyContext from '../../contexts/Notify';
@@ -145,14 +147,14 @@ export default function Add(props) {
 			profiles[0].video = helper.preselectProfile(profiles[0].video, 'video', $sources[0].streams, serviceSkills.codecs.video, $skills);
 			profiles[0].audio = helper.preselectProfile(profiles[0].audio, 'audio', $sources[0].streams, serviceSkills.codecs.audio, $skills);
 
+
 			setSettings({
 				...$settings,
 				name: s.name,
 				profiles: profiles,
-				streams: M.createOutputStreams($sources, profiles, false),
 			});
 
-			setTab('general');
+			setTab('encoding');
 		} else {
 			// Reset the service outputs and settings
 			setSettings({
@@ -524,7 +526,7 @@ export default function Add(props) {
 										)}
 										<Grid item xs={12}>
 											<Typography variant="h4">
-												<Trans>Audio</Trans>
+												<Trans>Audio settings</Trans>
 											</Typography>
 										</Grid>
 										<Grid item xs={12}>
