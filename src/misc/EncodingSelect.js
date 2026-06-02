@@ -138,6 +138,17 @@ export default function EncodingSelect(props) {
 	}
 
 	let encoderList = [];
+	let aacAllowed = props.type === 'audio' ? props.codecs.includes('aac') : false;
+	let aacAvailable = false;
+
+	if (props.type === 'audio') {
+		for (let c of encoderRegistry.List()) {
+			if (c.codec === 'aac' && availableEncoders.includes(c.coder)) {
+				aacAvailable = true;
+				break;
+			}
+		}
+	}
 
 	for (let c of encoderRegistry.List()) {
 		// Does ffmpeg support the coder?
@@ -217,6 +228,13 @@ export default function EncodingSelect(props) {
 					{encoderList}
 				</Select>
 			</Grid>
+			{props.type === 'audio' && (!aacAllowed || !aacAvailable) && (
+				<Grid item xs={12}>
+					<Typography variant="caption" color="textSecondary">
+						{!aacAllowed ? <Trans>AAC is not allowed by this service.</Trans> : <Trans>AAC encoder is not available in FFmpeg.</Trans>}
+					</Typography>
+				</Grid>
+			)}
 			{decoderList.length >= 2 && (
 				<React.Fragment>
 					<Grid item xs={12}>

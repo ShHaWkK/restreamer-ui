@@ -1051,20 +1051,40 @@ const preselectProfile = (type, streams, profile, encoders, preselectAudio = tru
 
 			audio.stream = i;
 
-			if (streams[i].codec === 'aac' || streams[i].codec === 'mp3') {
-				audio.encoder.coder = 'copy';
-			} else {
-				let coder = Coders.Audio.GetCoderForCodec('aac', encoders.audio);
+			let coder = Coders.Audio.GetCoderForCodec('aac', encoders.audio);
+			if (coder === null) {
+				coder = Coders.Audio.GetCoderForCodec('mp3', encoders.audio);
 				if (coder === null) {
-					coder = Coders.Audio.GetCoderForCodec('mp3', encoders.audio);
-					if (coder === null) {
-						audio.encoder.coder = 'none';
+					if (streams[i].codec === 'aac' || streams[i].codec === 'mp3') {
+						audio.encoder.coder = 'copy';
 					} else {
-						audio.encoder.coder = coder.coder;
+						audio.encoder.coder = 'none';
 					}
 				} else {
 					audio.encoder.coder = coder.coder;
 				}
+			} else {
+				audio.encoder.coder = coder.coder;
+			}
+
+			if (audio.encoder.coder !== 'copy' && audio.encoder.coder !== 'none') {
+				const encoderObj = Coders.Audio.Get(audio.encoder.coder);
+				if (encoderObj) {
+					const defaults = encoderObj.defaults(streams[i], {});
+					audio.encoder.settings = defaults.settings;
+					audio.encoder.mapping = defaults.mapping;
+				}
+
+				const resampleSettings = { channels: '2', layout: 'stereo', sampling: '48000' };
+				audio.filter = {
+					settings: {
+						aresample: {
+							settings: resampleSettings,
+						},
+					},
+				};
+				audio.filter.settings.aresample.graph = Filters.Audio.Get('aresample').createGraph(resampleSettings);
+				audio.filter.graph = audio.filter.settings.aresample.graph;
 			}
 
 			break;
