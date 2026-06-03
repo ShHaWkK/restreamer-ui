@@ -948,6 +948,19 @@ const initProfile = (initialProfile) => {
 		...profile.audio.filter,
 	};
 
+	// If there is a filter but no explicit codec in the mapping, FFmpeg will default to
+	// stream copy for compatible formats (e.g. AAC→AAC), causing a filter+copy conflict.
+	// Clear the filter to let the profile be regenerated cleanly on next save.
+	if (
+		profile.audio.filter.graph.length > 0 &&
+		profile.audio.encoder.coder !== 'copy' &&
+		profile.audio.encoder.coder !== 'none' &&
+		profile.audio.encoder.mapping.local.length === 0
+	) {
+		profile.audio.filter.graph = '';
+		profile.audio.filter.settings = {};
+	}
+
 	profile.custom = {
 		selected: profile.audio.source === 1,
 		stream: profile.audio.source === 1 ? -2 : profile.audio.stream,
