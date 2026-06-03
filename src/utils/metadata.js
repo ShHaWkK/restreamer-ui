@@ -1162,6 +1162,11 @@ const preselectProfile = (type, streams, profile, encoders, preselectAudio = tru
 			return false;
 		}
 
+		// An empty mapping means the encoder was never properly configured — force regeneration.
+		if (audio.encoder.mapping.local.length === 0) {
+			return false;
+		}
+
 		return true;
 	};
 
