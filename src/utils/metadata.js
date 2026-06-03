@@ -1074,17 +1074,6 @@ const preselectProfile = (type, streams, profile, encoders, preselectAudio = tru
 					audio.encoder.settings = defaults.settings;
 					audio.encoder.mapping = defaults.mapping;
 				}
-
-				const resampleSettings = { channels: '2', layout: 'stereo', sampling: '48000' };
-				audio.filter = {
-					settings: {
-						aresample: {
-							settings: resampleSettings,
-						},
-					},
-				};
-				audio.filter.settings.aresample.graph = Filters.Audio.Get('aresample').createGraph(resampleSettings);
-				audio.filter.graph = audio.filter.settings.aresample.graph;
 			}
 
 			break;

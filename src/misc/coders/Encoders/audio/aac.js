@@ -18,7 +18,7 @@ function createMapping(settings, stream, skills) {
 	stream = Helper.InitStream(stream);
 	skills = Helper.InitSkills(skills);
 
-	const local = ['-codec:a', 'aac', '-b:a', `${settings.bitrate}k`, '-shortest'];
+	const local = ['-codec:a', 'aac', '-b:a', `${settings.bitrate}k`, '-ar', '48000', '-ac', '2', '-shortest'];
 
 	if (stream.codec === 'aac') {
 		local.push('-bsf:a', 'aac_adtstoasc');
