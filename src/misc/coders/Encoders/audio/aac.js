@@ -7,7 +7,7 @@ import Helper from '../../helper';
 
 function init(initialState) {
 	const state = {
-		bitrate: '128',
+		bitrate: '256',
 		...initialState,
 	};
 
