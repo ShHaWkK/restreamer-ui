@@ -59,6 +59,76 @@ class API {
 		return await this._call('PATCH', path, options);
 	}
 
+	async _upload(path, data, onProgress) {
+		path = this.base + path;
+		if (path !== '/' && path[path.length - 1] === '/') {
+			path = path.substring(0, path.length - 1);
+		}
+
+		let token = '';
+		if (typeof this.token === 'function') {
+			token = await this.token();
+		} else {
+			token = this.token;
+		}
+
+		this._debug(`uploading PUT ${this.address + path}`);
+
+		return await new Promise((resolve) => {
+			const xhr = new XMLHttpRequest();
+			xhr.open('PUT', this.address + path, true);
+			xhr.setRequestHeader('Content-Type', 'application/data');
+
+			if (token.length !== 0) {
+				xhr.setRequestHeader('Authorization', 'Bearer ' + token);
+			}
+
+			xhr.upload.onprogress = (event) => {
+				onProgress(event.loaded, event.lengthComputable ? event.total : 0);
+			};
+
+			xhr.onload = () => {
+				const res = {
+					err: null,
+					val: null,
+				};
+
+				if (xhr.status < 200 || xhr.status >= 300) {
+					res.err = {
+						code: xhr.status,
+						message: xhr.responseText || xhr.statusText,
+					};
+					this._error(res.err.message);
+					resolve(res);
+					return;
+				}
+
+				res.val = xhr.responseText;
+
+				const size = data?.byteLength ?? data?.size ?? 0;
+				if (size > 0) {
+					onProgress(size, size);
+				}
+
+				resolve(res);
+			};
+
+			xhr.onerror = () => {
+				const res = {
+					err: {
+						code: -1,
+						message: 'Network error during upload',
+					},
+					val: null,
+				};
+				this._error(res.err.message);
+				resolve(res);
+			};
+
+			xhr.send(data);
+		});
+	}
+
 	async _call(method, path, options = {}) {
 		options = {
 			method: method.toUpperCase(),
@@ -277,7 +347,11 @@ class API {
 		return await this._HEAD('/v3/fs/disk' + path);
 	}
 
-	async DataPutFile(path, data) {
+	async DataPutFile(path, data, onProgress = null) {
+		if (typeof onProgress === 'function') {
+			return await this._upload('/v3/fs/disk' + path, data, onProgress);
+		}
+
 		return await this._PUT('/v3/fs/disk' + path, {
 			headers: {
 				'Content-Type': 'application/data',
