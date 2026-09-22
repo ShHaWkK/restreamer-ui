@@ -277,12 +277,69 @@ class API {
 		return await this._HEAD('/v3/fs/disk' + path);
 	}
 
-	async DataPutFile(path, data) {
-		return await this._PUT('/v3/fs/disk' + path, {
-			headers: {
-				'Content-Type': 'application/data',
-			},
-			body: data,
+	async DataPutFile(path, data, onProgress = null) {
+		if (typeof onProgress !== 'function') {
+			return await this._PUT('/v3/fs/disk' + path, {
+				headers: {
+					'Content-Type': 'application/data',
+				},
+				body: data,
+			});
+		}
+
+		let token = '';
+		if (typeof this.token === 'function') {
+			token = await this.token();
+		} else {
+			token = this.token;
+		}
+
+		return await new Promise((resolve) => {
+			const xhr = new XMLHttpRequest();
+			const url = this.address + this.base + '/v3/fs/disk' + path;
+
+			xhr.open('PUT', url, true);
+			xhr.setRequestHeader('Content-Type', 'application/data');
+			if (token.length !== 0) {
+				xhr.setRequestHeader('Authorization', 'Bearer ' + token);
+			}
+
+			xhr.upload.onprogress = (event) => {
+				if (event.lengthComputable && event.total > 0) {
+					onProgress(Math.min(100, Math.round((event.loaded / event.total) * 100)));
+				}
+			};
+
+			xhr.onerror = () => {
+				resolve({
+					err: {
+						code: -1,
+						message: 'Network error',
+					},
+					val: null,
+				});
+			};
+
+			xhr.onload = () => {
+				const res = {
+					err: null,
+					val: xhr.responseText,
+				};
+
+				if (xhr.status < 200 || xhr.status >= 300) {
+					res.err = {
+						code: xhr.status,
+						message: xhr.statusText || xhr.responseText,
+					};
+					res.val = null;
+				} else {
+					onProgress(100);
+				}
+
+				resolve(res);
+			};
+
+			xhr.send(data);
 		});
 	}
 
