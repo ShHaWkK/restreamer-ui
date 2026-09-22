@@ -4,6 +4,8 @@ import '@testing-library/jest-dom';
 
 import Wizard from './index';
 
+let lastIngest = null;
+
 const restreamer = {
 	SelectChannel: () => {
 		return 'test';
@@ -308,6 +310,7 @@ const restreamer = {
 		return [{ streams: streams }, null];
 	},
 	UpsertIngest: (_channelid, global, inputs, outputs, control) => {
+		lastIngest = { global, inputs, outputs, control };
 		return [{}, null];
 	},
 	SetIngestMetadata: (_channelid, data) => {},
@@ -546,6 +549,32 @@ test('wizard: network source video h264', async () => {
 	expect(screen.queryByText(/The video source doesn't provide any compatible audio stream./)).toBeInTheDocument();
 	expect(screen.queryByText(/Silence Audio/)).toBeInTheDocument();
 	expect(screen.queryByText(/No audio/)).toBeInTheDocument();
+
+	lastIngest = null;
+
+	button = screen.getByRole('button', { name: 'Next' });
+	await act(async () => {
+		fireEvent.click(button);
+	});
+
+	expect(screen.queryByText(/Metadata/)).toBeInTheDocument();
+
+	button = screen.getByRole('button', { name: 'Next' });
+	await act(async () => {
+		fireEvent.click(button);
+	});
+
+	expect(screen.queryByText(/License/)).toBeInTheDocument();
+
+	button = screen.getByRole('button', { name: 'Save' });
+	await act(async () => {
+		fireEvent.click(button);
+	});
+
+	expect(lastIngest).not.toBeNull();
+	expect(lastIngest.inputs).toHaveLength(2);
+	expect(lastIngest.inputs[1].address).toBe('anullsrc=r=44100:cl=stereo');
+	expect(lastIngest.outputs[0].options).toEqual(expect.arrayContaining(['-map', '0:0', '-map', '1:0']));
 });
 
 test('wizard: network source video non-h264', async () => {
