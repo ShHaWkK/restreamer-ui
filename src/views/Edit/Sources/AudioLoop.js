@@ -54,6 +54,7 @@ function Source(props) {
 	const classes = useStyles();
 	const settings = initSettings(props.settings);
 	const [$saving, setSaving] = React.useState(false);
+	const [$progress, setProgress] = React.useState(0);
 	const [$error, setError] = React.useState({
 		open: false,
 		title: '',
@@ -61,7 +62,11 @@ function Source(props) {
 	});
 
 	const handleFileUpload = async (data, extension, mimetype) => {
-		const path = await props.onStore('audioloop.source', data);
+		const path = await props.onStore('audioloop.source', data, (loaded, total) => {
+			if (total > 0) {
+				setProgress(Math.min(100, Math.round((loaded / total) * 100)));
+			}
+		});
 
 		props.onChange({
 			...settings,
@@ -69,10 +74,12 @@ function Source(props) {
 			mimetype: mimetype,
 		});
 
+		setProgress(100);
 		setSaving(false);
 	};
 
 	const handleUploadStart = () => {
+		setProgress(0);
 		setSaving(true);
 	};
 
@@ -105,6 +112,7 @@ function Source(props) {
 				message = <Trans>Unknown upload error</Trans>;
 		}
 
+		setProgress(0);
 		setSaving(false);
 
 		showUploadError(title, message);
@@ -157,7 +165,12 @@ function Source(props) {
 				</Grid>
 			</Grid>
 			<Backdrop open={$saving}>
-				<CircularProgress color="inherit" />
+				<CircularProgress color="inherit" variant={$progress > 0 ? 'determinate' : 'indeterminate'} value={$progress} />
+				{$progress > 0 && (
+					<Typography variant="body2" sx={{ marginLeft: 1 }}>
+						{$progress}%
+					</Typography>
+				)}
 			</Backdrop>
 			<Dialog
 				open={$error.open}
