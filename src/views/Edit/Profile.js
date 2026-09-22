@@ -214,8 +214,8 @@ export default function Profile(props) {
 		setSkillsRefresh(false);
 	};
 
-	const handleStore = async (name, data) => {
-		return await props.onStore(name, data);
+	const handleStore = async (name, data, onProgress = null) => {
+		return await props.onStore(name, data, onProgress);
 	};
 
 	const handleEncoding = (type) => (encoder, decoder) => {
