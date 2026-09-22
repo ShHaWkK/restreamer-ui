@@ -5,6 +5,20 @@ The user interface of the Restreamer for the connection to the [datarhei Core](h
 - React
 - Material-UI (MUI)
 
+## Upload limits
+
+The UI validates selected local files before upload.
+
+Current limits are client-side and hard-coded:
+
+- video loop files: 25 MiB (`src/views/Edit/Sources/VideoLoop.js`)
+- audio loop files: 25 MiB (`src/views/Edit/Sources/AudioLoop.js`)
+- image loop files: 2 MiB (`src/views/Edit/Sources/VideoLoop.js`)
+
+These limits are not currently exposed as Restreamer/Core environment variables or runtime settings. Changing them requires updating the corresponding `maxSize` values and rebuilding the UI.
+
+The shared upload component (`src/misc/UploadButton.js`) enforces the configured `maxSize` before reading and uploading a selected file.
+
 ## Development
 
 ### For the Restreamer interface:
