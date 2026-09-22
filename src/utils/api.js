@@ -310,28 +310,54 @@ class API {
 				}
 			};
 
-			xhr.onerror = () => {
-				resolve({
+				xhr.onerror = () => {
+				const res = {
 					err: {
 						code: -1,
 						message: 'Network error',
 					},
 					val: null,
-				});
+				};
+
+				this._error(res.err.message);
+				resolve(res);
 			};
 
 			xhr.onload = () => {
+				const contentType = xhr.getResponseHeader('Content-Type');
+				const isJSON = contentType !== null && contentType.indexOf('application/json') !== -1;
+				let body = xhr.responseText;
+
+				if (isJSON && body.length !== 0) {
+					try {
+						body = JSON.parse(body);
+					} catch (err) {
+						// Keep the raw response when a server labels malformed JSON as JSON.
+					}
+				}
+
 				const res = {
 					err: null,
-					val: xhr.responseText,
+					val: body,
 				};
 
 				if (xhr.status < 200 || xhr.status >= 300) {
+					let message = xhr.statusText;
+
+					if (isJSON && body !== null && typeof body === 'object' && 'code' in body && 'message' in body) {
+						message = body.message;
+					} else if (typeof body === 'string' && body.length !== 0) {
+						message = body;
+					} else if (body !== null && body !== '') {
+						message = body;
+					}
+
 					res.err = {
 						code: xhr.status,
-						message: xhr.statusText || xhr.responseText,
+						message: message,
 					};
 					res.val = null;
+					this._error(res.err.message);
 				} else {
 					onProgress(100);
 				}
