@@ -402,6 +402,7 @@ export default function Wizard(props) {
 			// set default for silence audio track if the video doesn't have an audio track
 			if (audioprofile.source === -1) {
 				audioprofile.source = 1;
+				$profile.custom.selected = true;
 
 				const fullSource = FullSources.Get('virtualaudio');
 				const source = $sources.audio;
@@ -598,6 +599,8 @@ export default function Wizard(props) {
 
 			const profile = $profile.audio;
 			let source = null;
+
+			$profile.custom.selected = value === 'alsa' || value === 'silence';
 
 			if (value === 'video') {
 				profile.source = 0;
