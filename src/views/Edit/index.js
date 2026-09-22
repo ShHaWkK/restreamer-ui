@@ -210,8 +210,8 @@ export default function Edit(props) {
 		setSkills(skills);
 	};
 
-	const handleSourceStore = async (name, data) => {
-		return await props.restreamer.UploadData('', name, data);
+	const handleSourceStore = async (name, data, onProgress = null) => {
+		return await props.restreamer.UploadData('', name, data, onProgress);
 	};
 
 	const handleSourceProbe = async (inputs) => {
