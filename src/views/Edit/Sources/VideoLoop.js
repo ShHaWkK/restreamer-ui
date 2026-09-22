@@ -62,6 +62,7 @@ function Source(props) {
 	const classes = useStyles();
 	const settings = initSettings(props.settings);
 	const [$saving, setSaving] = React.useState(false);
+	const [$uploadProgress, setUploadProgress] = React.useState(0);
 	const [$error, setError] = React.useState({
 		open: false,
 		title: '',
@@ -69,7 +70,7 @@ function Source(props) {
 	});
 
 	const handleFileUpload = async (data, extension, mimetype) => {
-		const path = await props.onStore('videoloop.source', data);
+		const path = await props.onStore('videoloop.source', data, setUploadProgress);
 
 		props.onChange({
 			...settings,
@@ -81,6 +82,7 @@ function Source(props) {
 	};
 
 	const handleUploadStart = () => {
+		setUploadProgress(0);
 		setSaving(true);
 	};
 
@@ -165,7 +167,10 @@ function Source(props) {
 				</Grid>
 			</Grid>
 			<Backdrop open={$saving}>
-				<CircularProgress color="inherit" />
+				<div style={{ textAlign: 'center' }}>
+					<CircularProgress color="inherit" variant="determinate" value={$uploadProgress} />
+					<Typography>{$uploadProgress}%</Typography>
+				</div>
 			</Backdrop>
 			<Dialog
 				open={$error.open}
