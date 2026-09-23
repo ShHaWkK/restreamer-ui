@@ -1,0 +1,18 @@
+name: Validate player config JSON
+on:
+  push:
+    branches: [tmp/validate-player-json]
+permissions:
+  contents: read
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '21'
+          cache: yarn
+      - run: yarn install --frozen-lockfile
+      - run: yarn test-ci src/utils/restreamer.player-config.test.js
+      - run: yarn build
