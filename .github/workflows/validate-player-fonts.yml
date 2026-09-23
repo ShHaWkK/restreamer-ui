@@ -1,0 +1,21 @@
+name: Validate player fonts change
+on:
+  push:
+    branches: [tmp/validate-player-fonts]
+permissions:
+  contents: read
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '21'
+          cache: yarn
+      - run: yarn install --frozen-lockfile
+      - name: Check no external Google Fonts remain in player site
+        run: |
+          ! grep -R "fonts.googleapis.com" public/_playersite
+          ! grep -R "fonts.gstatic.com" public/_playersite
+      - run: yarn build
