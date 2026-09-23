@@ -1,0 +1,27 @@
+name: Validate PR 103 on dev
+
+on:
+  push:
+    branches: [tmp/validate-103-dev]
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Verify playersite is self-contained
+        run: |
+          ! grep -q "fonts.googleapis.com" public/_playersite/index.html
+          ! grep -q "material-icons" public/_playersite/index.html
+          grep -q "<svg class=\"inline-icon" public/_playersite/index.html
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '21'
+          cache: yarn
+      - run: yarn install --frozen-lockfile
+      - run: yarn build
+        env:
+          CI: false
