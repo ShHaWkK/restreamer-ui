@@ -1,0 +1,23 @@
+name: Validate PR 109 on dev
+
+on:
+  push:
+    branches: [tmp/validate-109-dev]
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '21'
+          cache: yarn
+      - run: yarn install --frozen-lockfile
+      - run: yarn test-ci
+      - run: yarn build
+        env:
+          CI: false
