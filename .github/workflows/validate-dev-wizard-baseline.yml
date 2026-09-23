@@ -1,0 +1,20 @@
+name: Validate dev wizard baseline
+
+on:
+  push:
+    branches: [tmp/validate-dev-wizard-baseline]
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '21'
+          cache: yarn
+      - run: yarn install --frozen-lockfile
+      - run: yarn test-ci src/views/Edit/Wizard/index.test.js
